@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "init": "^0.1.2",
+    "pg": "^8.13.1",
+    "prompt-sync": "^4.2.0"
+  },
+  "name": "permutobackbanco",
+  "version": "1.0.0",
+  "main": "usuarios_back.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
