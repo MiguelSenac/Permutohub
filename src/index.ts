@@ -1,6 +1,7 @@
-import { UsuarioService } from "./service/UsuarioService"
+//import { UsuarioService } from "./service/UsuarioService"
+import { UsuarioView } from "./view/UsuarioView"
  
-const servico = new UsuarioService();
+/*const servico = new UsuarioService();
  
 async function testeUm() {
   console.table(await servico.listarUsuarios());
@@ -10,8 +11,8 @@ async function testeDois(email){
   console.table(await servico.buscarUsuarioPorEmail(email))
 }
 
-async function testeTres (nome, email, senha, descricao) {
-  await servico.inserirUsuario(nome, email, senha, descricao)
+async function testeTres (usuario, nome, email, senha, descricao) {
+  await servico.inserirUsuario(usuario, nome, email, senha, descricao)
 }
 
 async function testeQuatro (email){
@@ -23,5 +24,9 @@ async function testeQuatro (email){
 //testeDois("henrique@email")
 //testeTres("Felipe", "felipe@outlook.com", "felipinhogay", "junior desenvolto")
 testeQuatro("felipe@email.com")
-testeUm()
+testeUm()*/
+
+const usuarioView = new UsuarioView();
+usuarioView.exibirMenu()
+
 
