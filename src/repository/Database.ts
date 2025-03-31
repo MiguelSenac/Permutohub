@@ -2,13 +2,13 @@ import { Pool } from "pg";
 
 export class Database{
     static pool : Pool
-S
+
     static iniciarConexao(){
         this.pool = new Pool({
             user : 'postgres',
             password: '1234',
             host: 'localhost',
-            database: 'permutohub',
+            database: 'permuto',
             port: 5432
         })
 
