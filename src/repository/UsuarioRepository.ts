@@ -12,7 +12,7 @@ export class UsuarioRepository implements InterfaceRepository<Usuario> {
     }
 
     mapear(row: any): Usuario {
-        return new Usuario(row.usuario, row.nome, row.email, row.senha, row.perfil, row.id)
+        return new Usuario(row.usuario, row.nome, row.email, row.senha, row.perfil, Number(row.avaliacao), row.id)
     }
 
     async listar(): Promise<Usuario[]> {
@@ -21,7 +21,7 @@ export class UsuarioRepository implements InterfaceRepository<Usuario> {
         return result.rows.map(this.mapear)
     }
 
-    async buscarPorId(id: string): Promise<Usuario | null> {
+    async buscarPorId(id: number): Promise<Usuario | null> {
         const query = "SELECT * FROM public.usuarios WHERE id = $1"
         const result = await this.pool.query(query, [id])
 
@@ -32,24 +32,18 @@ export class UsuarioRepository implements InterfaceRepository<Usuario> {
 
     async inserir(entidade: Usuario): Promise<Usuario> {
         const query = "INSERT INTO public.usuarios (usuario, nome, email, senha, perfil) VALUES ($1, $2, $3, $4, $5) RETURNING *"
-        const result = await this.pool.query(query, [
-            entidade.getUsuario(),
-            entidade.getNome(),
-            entidade.getEmail(),
-            entidade.getSenha(),
-            entidade.getPerfil()
-        ])
+        const result = await this.pool.query(query, [entidade.getUsuario(), entidade.getNome(), entidade.getEmail(), entidade.getSenha(), entidade.getPerfil()])
 
         return this.mapear(result.rows[0])
     }
 
-    async remover(id: string): Promise<boolean> {
+    async remover(id: number): Promise<boolean> {
         const query = "DELETE FROM public.usuarios WHERE id = $1"
         await this.pool.query(query, [id])
         return true
     }
 
-    async atualizar(id: string, entidade: Usuario): Promise<Usuario> {
+    async atualizar(id: number, entidade: Usuario): Promise<Usuario> {
         const campos: string[] = []
         const valores: any[] = []
         let index = 1
@@ -83,6 +77,13 @@ export class UsuarioRepository implements InterfaceRepository<Usuario> {
             valores.push(entidade.getPerfil())
             index++
         }
+
+        if (entidade.getAvaliacao()) {
+            campos.push("avaliacao = $" + index)
+            valores.push(entidade.getAvaliacao())
+            index++
+        }
+
 
         const query = "UPDATE public.usuarios SET " + campos.join(", ") + " WHERE id = $" + (valores.length + 1) + " RETURNING *"
         valores.push(id)

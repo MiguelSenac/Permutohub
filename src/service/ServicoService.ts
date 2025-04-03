@@ -16,7 +16,8 @@ export class ServicoService implements InterfaceService<Servico> {
     async listar(): Promise<Servico[]> {
         try {
             return await this.servicoRepository.listar()
-        } catch (error) {
+        } 
+        catch (error) {
             console.error("[ERRO] Falha ao listar serviços", error)
             throw new Error("Falha ao listar serviços")
         }
@@ -29,16 +30,18 @@ export class ServicoService implements InterfaceService<Servico> {
             }
         
             return await this.servicoRepository.listarPorUsuario(idUsuario)
-        } catch (error) {
+        } 
+        catch (error) {
             console.error("[ERRO] Falha ao listar serviços por usuário", error)
             throw new Error("Falha ao listar serviços por usuário")
         }
     }
 
-    async buscarPorId(id: string): Promise<Servico | null> {
+    async buscarPorId(id: number): Promise<Servico | null> {
         try {
             return await this.servicoRepository.buscarPorId(id)
-        } catch (error) {
+        } 
+        catch (error) {
             console.error("[ERRO] Falha ao buscar serviço por ID", error)
             throw new Error("Falha ao buscar serviço por ID")
         }
@@ -46,7 +49,7 @@ export class ServicoService implements InterfaceService<Servico> {
 
     async inserir(objeto: Servico): Promise<Servico> {
         try {
-            if (!objeto.getIdUsuario() || objeto.getIdUsuario().trim() === "") {
+            if (!objeto.getIdUsuario()) {
                 throw new Error("ID do usuário não pode ser vazio.")
             }
 
@@ -64,13 +67,14 @@ export class ServicoService implements InterfaceService<Servico> {
             }
 
             return await this.servicoRepository.inserir(objeto)
-        } catch (error) {
+        } 
+        catch (error) {
             console.error("[ERRO] Falha ao inserir serviço", error)
             throw new Error("Falha ao inserir serviço")
         }
     }
 
-    async remover(id: string): Promise<boolean> {
+    async remover(id: number): Promise<boolean> {
         try {
             const servicoExistente = await this.servicoRepository.buscarPorId(id)
             
@@ -79,13 +83,14 @@ export class ServicoService implements InterfaceService<Servico> {
             }
         
             return await this.servicoRepository.remover(id)
-        } catch (error) {
+        } 
+        catch (error) {
             console.error("[ERRO] Falha ao remover serviço", error)
             throw new Error("Falha ao remover serviço")
         }
     }
 
-    async atualizar(id: string, dadosAtualizados: Servico): Promise<Servico> {
+    async atualizar(id: number, dadosAtualizados: Servico): Promise<Servico> {
         try {
             const servicoExistente = await this.servicoRepository.buscarPorId(id)
             if (!servicoExistente) {
@@ -101,7 +106,8 @@ export class ServicoService implements InterfaceService<Servico> {
             }
 
             return await this.servicoRepository.atualizar(id, dadosAtualizados)
-        } catch (error) {
+        } 
+        catch (error) {
             console.error("[ERRO] Falha ao atualizar serviço", error)
             throw new Error("Falha ao atualizar serviço")
         }

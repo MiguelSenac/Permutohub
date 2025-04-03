@@ -1,11 +1,11 @@
 export class Avaliacao {
-    private id?: string
-    private idTroca: string
-    private nota: string
+    private id?: number
+    private idTroca: number
+    private nota: number
     private comentario: string
-    private dataAvaliacao: string 
+    private dataAvaliacao: string
 
-    constructor(idTroca = "", nota = "", comentario = "", dataAvaliacao = "", id?: string) {
+    constructor(idTroca = 0, nota = 1, comentario = "", dataAvaliacao = "", id?: number) {
         this.id = id
         this.idTroca = idTroca
         this.nota = nota
@@ -13,15 +13,15 @@ export class Avaliacao {
         this.dataAvaliacao = dataAvaliacao  
     }
 
-    public getId(): string | undefined {
+    public getId(): number | undefined {
         return this.id
     }
 
-    public getIdTroca(): string {
+    public getIdTroca(): number {
         return this.idTroca
     }
 
-    public getNota(): string {
+    public getNota(): number {
         return this.nota
     }
 
@@ -33,15 +33,15 @@ export class Avaliacao {
         return this.dataAvaliacao
     }
 
-    public setId(id: string): void {
+    public setId(id: number): void {
         this.id = id
     }
 
-    public setIdTroca(idTroca: string): void {
+    public setIdTroca(idTroca: number): void {
         this.idTroca = idTroca
     }
 
-    public setNota(nota: string): void {
+    public setNota(nota: number): void {
         this.nota = nota
     }
 

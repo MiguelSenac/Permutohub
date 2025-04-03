@@ -1,61 +1,55 @@
 export class Troca {
-    private id?: string
-    private idUsuarioOfertante: string
-    private idUsuarioReceptor: string
-    private idServicoTrocado: string
-    private dataTroca: Date
+    private id?: number
+    private idUsuarioOfertante: number
+    private idUsuarioReceptor: number
+    private idServicoTrocado: number
+    private dataTroca: string
 
-    constructor(
-        idUsuarioOfertante = "",
-        idUsuarioReceptor = "",
-        idServicoTrocado = "",
-        dataTroca: string | Date = new Date(),
-        id?: string
-    ) {
+    constructor(idUsuarioOfertante = 0, idUsuarioReceptor = 0, idServicoTrocado = 0, dataTroca = "", id?: number) {
         this.id = id
         this.idUsuarioOfertante = idUsuarioOfertante
         this.idUsuarioReceptor = idUsuarioReceptor
         this.idServicoTrocado = idServicoTrocado
-        this.dataTroca = typeof dataTroca === "string" ? new Date(dataTroca) : dataTroca
+        this.dataTroca = dataTroca
     }
 
-    public getId(): string | undefined {
+    public getId(): number | undefined {
         return this.id
     }
 
-    public getIdUsuarioOfertante(): string {
+    public getIdUsuarioOfertante(): number {
         return this.idUsuarioOfertante
     }
 
-    public getIdUsuarioReceptor(): string {
+    public getIdUsuarioReceptor(): number {
         return this.idUsuarioReceptor
     }
 
-    public getIdServicoTrocado(): string {
+    public getIdServicoTrocado(): number {
         return this.idServicoTrocado
     }
 
-    public getDataTroca(): Date {
+    public getDataTroca(): string {
         return this.dataTroca
     }
 
-    public setId(id: string): void {
+    public setId(id: number): void {
         this.id = id
     }
 
-    public setIdUsuarioOfertante(idUsuarioOfertante: string): void {
+    public setIdUsuarioOfertante(idUsuarioOfertante: number): void {
         this.idUsuarioOfertante = idUsuarioOfertante
     }
 
-    public setIdUsuarioReceptor(idUsuarioReceptor: string): void {
+    public setIdUsuarioReceptor(idUsuarioReceptor: number): void {
         this.idUsuarioReceptor = idUsuarioReceptor
     }
 
-    public setIdServicoTrocado(idServicoTrocado: string): void {
+    public setIdServicoTrocado(idServicoTrocado: number): void {
         this.idServicoTrocado = idServicoTrocado
     }
 
-    public setDataTroca(dataTroca: Date): void {
+    public setDataTroca(dataTroca: string): void {
         this.dataTroca = dataTroca
     }
 }

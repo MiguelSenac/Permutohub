@@ -1,27 +1,36 @@
 import { Avaliacao } from "../entity/Avaliacao"
 import { AvaliacaoRepository } from "../repository/AvaliacaoRepository"
 import { InterfaceService } from "./InterfaceService"
+import { TrocaRepository } from "../repository/TrocaRepository"
+import { UsuarioRepository } from "../repository/UsuarioRepository"
+
 
 export class AvaliacaoService implements InterfaceService<Avaliacao> {
     private avaliacaoRepository: AvaliacaoRepository
+    private trocaRepository: TrocaRepository
+    private usuarioRepository: UsuarioRepository
 
     constructor() {
         this.avaliacaoRepository = new AvaliacaoRepository()
+        this.trocaRepository = new TrocaRepository()
+        this.usuarioRepository = new UsuarioRepository()
     }
 
     async listar(): Promise<Avaliacao[]> {
         try {
             return await this.avaliacaoRepository.listar()
-        } catch (error) {
+        }
+        catch (error) {
             console.error("[ERRO] Falha ao listar avaliações", error)
             throw new Error("Falha ao listar avaliações")
         }
     }
 
-    async buscarPorId(id: string): Promise<Avaliacao | null> {
+    async buscarPorId(id: number): Promise<Avaliacao | null> {
         try {
             return await this.avaliacaoRepository.buscarPorId(id)
-        } catch (error) {
+        }
+        catch (error) {
             console.error("[ERRO] Falha ao buscar avaliação por ID", error)
             throw new Error("Falha ao buscar avaliação por ID")
         }
@@ -33,18 +42,35 @@ export class AvaliacaoService implements InterfaceService<Avaliacao> {
                 throw new Error("[ERRO] ID da troca e nota são obrigatórios")
             }
 
-            // if (objeto.getNota() < 1 || objeto.getNota() > 5) {
-            //     throw new Error("[ERRO] A nota deve estar entre 1 e 5")
-            // }
+            const trocaExistente = await this.trocaRepository.buscarPorId(objeto.getIdTroca())
 
-            return await this.avaliacaoRepository.inserir(objeto)
-        } catch (error) {
+            if (!trocaExistente) {
+                throw new Error("[ERRO] A troca informada não existe")
+            }
+
+            if (objeto.getNota() < 1 || objeto.getNota() > 5) {
+                throw new Error("[ERRO] A nota deve estar entre 1 e 5")
+            }
+           
+            const novaAvaliacao = await this.avaliacaoRepository.inserir(objeto)
+            const idOfertante = trocaExistente.getIdUsuarioOfertante()
+            const mediaAvaliacoes = await this.avaliacaoRepository.calcularMediaAvaliacoesUsuario(idOfertante)
+            
+            const usuario = await this.usuarioRepository.buscarPorId(idOfertante);
+            if (usuario) {
+                usuario.setAvaliacao(mediaAvaliacoes);
+                await this.usuarioRepository.atualizar(idOfertante, usuario);
+            }
+            
+            return novaAvaliacao
+        }
+        catch (error) {
             console.error("[ERRO] Falha ao inserir avaliação", error)
             throw new Error("Falha ao inserir avaliação")
         }
     }
 
-    async remover(id: string): Promise<boolean> {
+    async remover(id: number): Promise<boolean> {
         try {
             const avaliacaoExistente = await this.avaliacaoRepository.buscarPorId(id)
             if (!avaliacaoExistente) {
@@ -52,13 +78,14 @@ export class AvaliacaoService implements InterfaceService<Avaliacao> {
             }
 
             return await this.avaliacaoRepository.remover(id)
-        } catch (error) {
+        }
+        catch (error) {
             console.error("[ERRO] Falha ao remover avaliação", error)
             throw new Error("Falha ao remover avaliação")
         }
     }
 
-    async atualizar(id: string, dadosAtualizados: Avaliacao): Promise<Avaliacao> {
+    async atualizar(id: number, dadosAtualizados: Avaliacao): Promise<Avaliacao> {
         try {
             const avaliacaoExistente = await this.avaliacaoRepository.buscarPorId(id)
             if (!avaliacaoExistente) {
@@ -78,13 +105,10 @@ export class AvaliacaoService implements InterfaceService<Avaliacao> {
                 return avaliacaoExistente
             }
 
-            // const notaAtualizada = Number(dadosAtualizados.getNota());
-            // if (notaAtualizada !== undefined && (notaAtualizada < 1 || notaAtualizada > 5)) {
-            //     throw new Error("[ERRO] A nota deve estar entre 1 e 5.")
-            // }
 
             return await this.avaliacaoRepository.atualizar(id, dadosAtualizados)
-        } catch (error) {
+        }
+        catch (error) {
             console.error("[ERRO] Falha ao atualizar avaliação", error)
             throw new Error("Falha ao atualizar avaliação")
         }

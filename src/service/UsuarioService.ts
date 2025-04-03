@@ -4,24 +4,29 @@ import { InterfaceService } from "./InterfaceService"
 
 export class UsuarioService implements InterfaceService<Usuario> {
     private usuarioRepository: UsuarioRepository
-
+    private emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    private senhaRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}[\]:;<>,.?/~`]).{8,}$/
     constructor() {
         this.usuarioRepository = new UsuarioRepository()
     }
 
+    
+
     async listar(): Promise<Usuario[]> {
         try {
             return await this.usuarioRepository.listar()
-        } catch (error) {
+        } 
+        catch (error) {
             console.error("[ERRO] Falha ao listar usuários", error)
             throw new Error("Falha ao listar usuários")
         }
     }
 
-    async buscarPorId(id: string): Promise<Usuario | null> {
+    async buscarPorId(id: number): Promise<Usuario | null> {
         try {
             return await this.usuarioRepository.buscarPorId(id)
-        } catch (error) {
+        } 
+        catch (error) {
             console.error("[ERRO] Falha ao buscar usuário por ID", error)
             throw new Error("Falha ao buscar usuário por ID")
         }
@@ -33,8 +38,8 @@ export class UsuarioService implements InterfaceService<Usuario> {
                 throw new Error("[ERRO] Usuário, nome, e-mail e senha são obrigatórios")
             }
 
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-            if (!emailRegex.test(objeto.getEmail())) {
+            
+            if (!this.emailRegex.test(objeto.getEmail())) {
                 throw new Error("[ERRO] Digite um e-mail válido")
             }
 
@@ -43,19 +48,19 @@ export class UsuarioService implements InterfaceService<Usuario> {
                 throw new Error("[ERRO] Já existe um usuário cadastrado com esse e-mail")
             }
 
-            const senhaRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}[\]:;<>,.?/~`]).{8,}$/
-            if (!senhaRegex.test(objeto.getSenha())) {
+            
+            if (!this.senhaRegex.test(objeto.getSenha())) {
                 throw new Error("[ERRO] A senha deve conter no mínimo 8 caracteres, incluindo uma letra maiúscula, um número e um caractere especial")
             }
 
             return await this.usuarioRepository.inserir(objeto)
-        } catch (error) {
-            console.error("[ERRO] Falha ao inserir usuário", error)
-            throw new Error("Falha ao inserir usuário")
+        } 
+        catch (error) {
+            throw new Error
         }
     }
 
-    async remover(id: string): Promise<boolean> {
+    async remover(id: number): Promise<boolean> {
         try {
             const usuarioExistente = await this.usuarioRepository.buscarPorId(id)
             if (!usuarioExistente) {
@@ -63,13 +68,14 @@ export class UsuarioService implements InterfaceService<Usuario> {
             }
 
             return await this.usuarioRepository.remover(id)
-        } catch (error) {
+        } 
+        catch (error) {
             console.error("[ERRO] Falha ao remover usuário", error)
             throw new Error("Falha ao remover usuário")
         }
     }
 
-    async atualizar(id: string, dadosAtualizados: Usuario): Promise<Usuario> {
+    async atualizar(id: number, dadosAtualizados: Usuario): Promise<Usuario> {
         try {
             const usuarioExistente = await this.usuarioRepository.buscarPorId(id)
             if (!usuarioExistente) {
@@ -87,8 +93,7 @@ export class UsuarioService implements InterfaceService<Usuario> {
             }
 
             if (dadosAtualizados.getEmail()) {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-                if (!emailRegex.test(dadosAtualizados.getEmail())) {
+                if (!this.emailRegex.test(dadosAtualizados.getEmail())) {
                     throw new Error("[ERRO] Digite um e-mail válido")
                 }
 
@@ -99,14 +104,14 @@ export class UsuarioService implements InterfaceService<Usuario> {
             }
 
             if (dadosAtualizados.getSenha()) {
-                const senhaRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}[\]:;<>,.?/~`]).{8,}$/
-                if (!senhaRegex.test(dadosAtualizados.getSenha())) {
+                if (!this.senhaRegex.test(dadosAtualizados.getSenha())) {
                     throw new Error("[ERRO] A senha deve conter no mínimo 8 caracteres, incluindo uma letra maiúscula, um número e um caractere especial")
                 }
             }
 
             return await this.usuarioRepository.atualizar(id, dadosAtualizados)
-        } catch (error) {
+        } 
+        catch (error) {
             console.error("[ERRO] Falha ao atualizar usuário", error)
             throw new Error("Falha ao atualizar usuário")
         }

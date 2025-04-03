@@ -1,12 +1,12 @@
 export class Servico {
-    private id?: string
-    private idUsuario: string
+    private id?: number
+    private idUsuario: number
     private titulo: string
     private descricao: string
     private data: string
     private ativo: boolean
 
-    constructor(idUsuario = "", titulo = "", descricao = "", data = "", ativo: boolean = true, idServico?: string) {
+    constructor(idUsuario = 0, titulo = "", descricao = "", data = "", ativo: boolean = true, idServico?: number) {
         this.id = idServico
         this.idUsuario = idUsuario
         this.titulo = titulo
@@ -15,13 +15,11 @@ export class Servico {
         this.ativo = ativo
     }
     
-
-    
-    public getId(): string | undefined {
+    public getId(): number | undefined {
         return this.id
     }
 
-    public getIdUsuario(): string {
+    public getIdUsuario(): number {
         return this.idUsuario
     }
 
@@ -40,13 +38,12 @@ export class Servico {
     public getAtivo(): boolean {
         return this.ativo
     }
-
     
-    public setId(idServico: string): void {
+    public setId(idServico: number): void {
         this.id = idServico
     }
 
-    public setIdUsuario(idUsuario: string): void {
+    public setIdUsuario(idUsuario: number): void {
         this.idUsuario = idUsuario
     }
 

@@ -4,6 +4,7 @@ import { Avaliacao } from "../entity/Avaliacao"
 import { InterfaceRepository } from "./InterfaceRepository"
 
 export class AvaliacaoRepository implements InterfaceRepository<Avaliacao> {
+    
     private pool: Pool
 
     constructor() {
@@ -20,7 +21,7 @@ export class AvaliacaoRepository implements InterfaceRepository<Avaliacao> {
         return result.rows.map(this.mapear)
     }
 
-    async buscarPorId(id: string): Promise<Avaliacao | null> {
+    async buscarPorId(id: number): Promise<Avaliacao | null> {
         const query = "SELECT * FROM public.avaliacoes WHERE id = $1"
         const result = await this.pool.query(query, [id])
 
@@ -37,18 +38,18 @@ export class AvaliacaoRepository implements InterfaceRepository<Avaliacao> {
         return this.mapear(result.rows[0])
     }
 
-    async remover(id: string): Promise<boolean> {
+    async remover(id: number): Promise<boolean> {
         const query = "DELETE FROM public.avaliacoes WHERE id = $1"
         await this.pool.query(query, [id])
         return true
     }
 
-    async atualizar(id: string, entidade: Avaliacao): Promise<Avaliacao> {
+    async atualizar(id: number, entidade: Avaliacao): Promise<Avaliacao> {
         const campos: string[] = []
         const valores: any[] = []
         let index = 1
 
-        if (entidade.getNota()!== undefined && entidade.getNota()!== "") {
+        if (entidade.getNota()!== undefined) {
             campos.push("nota = $" + index)
             valores.push(entidade.getNota())
             index++
@@ -72,4 +73,17 @@ export class AvaliacaoRepository implements InterfaceRepository<Avaliacao> {
         const result = await this.pool.query(query, valores)
         return this.mapear(result.rows[0])
     }
+
+    async calcularMediaAvaliacoesUsuario(id: number): Promise<number> {
+        const query = `
+            SELECT AVG(a.nota)::float as media
+            FROM public.avaliacoes a
+            JOIN public.trocas t ON a.id_troca = t.id
+            WHERE t.id_usuario_ofertante = $1
+        `
+        const result = await this.pool.query(query, [id])
+        return Number(result.rows[0].media) || 0
+    }
+    
+    
 }

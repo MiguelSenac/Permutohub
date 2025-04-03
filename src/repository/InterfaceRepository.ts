@@ -3,12 +3,12 @@ export interface InterfaceRepository<T> {
 
     listar(): Promise<T[]>
 
-    buscarPorId(id: string): Promise<T | null>
+    buscarPorId(id: number): Promise<T | null>
 
     inserir(entidade: T): Promise<T>
 
-    remover(id: string): Promise<boolean>
+    remover(id: number): Promise<boolean>
 
-    atualizar(id: string, entidade: T): Promise<T>
+    atualizar(id: number, entidade: T): Promise<T>
   }
   

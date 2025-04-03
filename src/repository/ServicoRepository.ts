@@ -25,11 +25,10 @@ export class ServicoRepository implements InterfaceRepository<Servico> {
     async listarPorUsuario(idUsuario: string): Promise<Servico[]> {
         const query = "select * from public.servicos where id_usuario = $1"
         const result = await this.pool.query(query, [idUsuario])
-
         return result.rows.map(this.mapear)
     }
 
-    async buscarPorId(id: string): Promise<Servico | null> {
+    async buscarPorId(id: number): Promise<Servico | null> {
         const query = "select * from public.servicos where id = $1"
         const result = await this.pool.query(query, [id])
 
@@ -42,24 +41,18 @@ export class ServicoRepository implements InterfaceRepository<Servico> {
 
     async inserir(entidade: Servico): Promise<Servico> {
         const query = "insert into public.servicos (id_usuario, titulo, descricao, data_publicacao, ativo) values($1, $2, $3, $4, $5) returning*"
-        const result = await this.pool.query(query, [
-            entidade.getIdUsuario(),
-            entidade.getTitulo(),
-            entidade.getDescricao(),
-            entidade.getData(),
-            entidade.getAtivo()
-        ])
+        const result = await this.pool.query(query, [entidade.getIdUsuario(), entidade.getTitulo(), entidade.getDescricao(), entidade.getData(), entidade.getAtivo()])
 
         return this.mapear(result.rows[0])
     }
 
-    async remover(id: string): Promise<boolean> {
+    async remover(id: number): Promise<boolean> {
         const query = "delete from public.servicos WHERE id = $1"
         await this.pool.query(query, [id])
         return true
     }
 
-    async atualizar(id: string, entidade: Servico): Promise<Servico> {
+    async atualizar(id: number, entidade: Servico): Promise<Servico> {
         const campos: string[] = []
         const valores: any[] = []
         let index = 1

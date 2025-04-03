@@ -1,21 +1,23 @@
 export class Usuario {
-    private id?: string
+    private id?: number
     private usuario: string
     private nome: string
     private email: string
     private senha: string
     private perfil: string
+    private avaliacao: number
 
-    constructor(usuario = "", nome = "", email = "", senha = "", perfil = "", id?: string) {
+    constructor(usuario = "", nome = "", email = "", senha = "", perfil = "", avaliacao:number = 1, id?: number) {
         this.id = id
         this.usuario = usuario
         this.nome = nome
         this.email = email
         this.senha = senha
         this.perfil = perfil
+        this.avaliacao = avaliacao
     }
 
-    getId(): string | undefined {
+    getId(): number | undefined {
         return this.id
     }
 
@@ -39,27 +41,36 @@ export class Usuario {
         return this.perfil
     }
 
-    setId(id: string) {
+    
+    getAvaliacao(): number { 
+        return this.avaliacao
+    }
+
+    setId(id: number): void {
         this.id = id
     }
 
-    setUsuario(usuario: string) {
+    setUsuario(usuario: string): void {
         this.usuario = usuario
     }
 
-    setNome(nome: string) {
+    setNome(nome: string): void {
         this.nome = nome
     }
 
-    setEmail(email: string) {
+    setEmail(email: string): void {
         this.email = email
     }
 
-    setSenha(senha: string) {
+    setSenha(senha: string): void {
         this.senha = senha
     }
 
-    setPerfil(perfil: string) {
+    setPerfil(perfil: string): void {
         this.perfil = perfil
+    }
+
+    setAvaliacao(avaliacao: number): void { 
+        this.avaliacao = avaliacao
     }
 }

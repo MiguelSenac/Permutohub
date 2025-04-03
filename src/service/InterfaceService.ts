@@ -2,12 +2,12 @@ export interface InterfaceService <T>{
     
     listar(): Promise<T[]>
 
-    buscarPorId (id: string): Promise<T | null>
+    buscarPorId (id: number): Promise<T | null>
 
-    remover (id: string): Promise<boolean>
+    remover (id: number): Promise<boolean>
 
     inserir (objeto: T): Promise<T>
 
-    atualizar (id: string, dadosAtualizados: T): Promise<T>
+    atualizar (id: number, dadosAtualizados: T): Promise<T>
 
 }

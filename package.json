@@ -10,11 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "@types/pg": "^8.11.11",
+    "chalk": "^5.4.1",
     "pg": "^8.13.1",
     "prompt-sync": "^4.2.0",
     "typescript": "^5.7.3"
   },
   "devDependencies": {
+    "@types/chalk": "^0.4.31",
     "@types/node": "^22.13.4",
     "tsx": "^4.19.2"
   },

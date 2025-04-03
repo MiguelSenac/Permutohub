@@ -1,0 +1,30 @@
+Proposta de Tema Gerador: Plataforma de Barter Digital - Permutohub
+O Permutohub é uma plataforma online que facilitará a troca de serviços entre freelancers no ambiente digital, promovendo uma economia colaborativa sem necessidade de transações financeiras. A seguir, apresento uma versão aprimorada da proposta, com foco em regras de negócio adicionais que complementam o projeto.
+Características do Projeto
+O Permutohub criará um espaço onde profissionais possam permutar suas habilidades e serviços, fortalecendo a comunidade de profissionais digitais através de um sistema estruturado de trocas.
+Funcionalidades
+Cadastro de Usuários: Perfis detalhados com habilidades, experiências e portfólios
+Sistema de Troca de Serviços: Criação de ofertas e solicitações de serviços
+Avaliações e Feedbacks: Sistema para construção de reputação na plataforma
+Justificativa
+Com o crescimento do trabalho freelancer e a busca por alternativas que minimizem custos operacionais, o Permutohub atenderá uma demanda crescente por soluções que permitam a troca de serviços sem movimentação de dinheiro, aplicando conceitos essenciais de banco de dados, programação e design de interface.
+Ferramentas Utilizadas
+Banco de Dados: PostgreSQL
+Backend: TypeScript
+Frontend: HTML/CSS e frameworks
+Controle de Versionamento: Git/GitHub
+Metodologia: Ágil (Kanban)
+Requisitos do Projeto
+1. Funcionais
+Cadastro de Usuários: Nome, e-mail, senha e habilidades
+Sistema de Troca de Serviços: Publicação de ofertas, negociação e conclusão de trocas
+Avaliações e Feedbacks: Avaliação da qualidade, feedback textual e média visível no perfil
+2. Não Funcionais
+Segurança: Armazenamento seguro de dados
+Usabilidade: Interface intuitiva, acessível e responsiva
+Escalabilidade: Arquitetura que permite expansão futura
+3. Regras de Negócio
+Regras Existentes:
+Cada usuário pode criar apenas um perfil, mas pode publicar múltiplas ofertas
+Avaliações só podem ser realizadas após a conclusão de uma troca
+

@@ -8,7 +8,7 @@ export class Database{
             user : 'postgres',
             password: '1234',
             host: 'localhost',
-            database: 'permuto',
+            database: 'permutohub',
             port: 5432
         })
 
