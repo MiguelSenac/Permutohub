@@ -15,6 +15,7 @@ export class Avaliacao {
 
     public getId(): number | undefined {
         return this.id
+        
     }
 
     public getIdTroca(): number {
