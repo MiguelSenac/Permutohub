@@ -11,7 +11,6 @@ export class Avaliacao {
         this.nota = nota
         this.comentario = comentario
         this.dataAvaliacao = dataAvaliacao  
-        
     }
 
     public getId(): number | undefined {
